@@ -95,6 +95,21 @@ const SelectField = ({ label, value, onChange, options, helpText = null }) => (
   </div>
 );
 
+// Toast notification component
+const Toast = ({ message, type = 'error', onClose }) => {
+  React.useEffect(() => {
+    const timer = setTimeout(() => onClose(), 5000);
+    return () => clearTimeout(timer);
+  }, [onClose]);
+
+  return (
+    <div className={`fixed top-4 right-4 p-4 rounded-md shadow-lg text-white ${type === 'error' ? 'bg-red-500' : 'bg-green-500'}`}>
+      {message}
+      <button className="ml-4 text-white" onClick={onClose}>×</button>
+    </div>
+  );
+};
+
 // Chinese New Year dates for accurate zodiac calculation
 const chineseNewYearDates = {
   1900: '1900-01-31',
@@ -309,8 +324,22 @@ const calculateCompatibility = (person1, person2) => {
 
 const getZodiacCompatibility = (animal1, animal2) => {
   const compatibilities = {
-    'Rat-Ox': 'Strong mutual support; Rat's ingenuity complements Ox's reliability.',
-    'Tiger-Tiger': 'Dynamic but challenging; both need to manage impulsiveness.'
+    'Rat-Ox': 'Strong mutual support; Rat\'s ingenuity complements Ox\'s reliability.',
+    'Rat-Dragon': 'Dynamic synergy; Rat\'s resourcefulness pairs well with Dragon\'s ambition.',
+    'Rat-Monkey': 'Intellectual harmony; both thrive on cleverness and adaptability.',
+    'Ox-Snake': 'Stable and discreet; Ox\'s patience aligns with Snake\'s wisdom.',
+    'Ox-Rooster': 'Practical and reliable; both value hard work and structure.',
+    'Tiger-Tiger': 'Dynamic but challenging; both need to manage impulsiveness.',
+    'Tiger-Horse': 'Energetic and adventurous; both love freedom and excitement.',
+    'Rabbit-Goat': 'Gentle and empathetic; both create a nurturing environment.',
+    'Dragon-Monkey': 'Creative and strategic; both are ambitious and versatile.',
+    'Snake-Rooster': 'Focused and observant; both appreciate precision and planning.',
+    'Horse-Dog': 'Loyal and spirited; both value honesty and adventure.',
+    'Goat-Pig': 'Compassionate and sincere; both prioritize harmony and kindness.',
+    'Monkey-Rat': 'Witty and resourceful; both enjoy intellectual challenges.',
+    'Rooster-Ox': 'Structured and diligent; both excel in organized settings.',
+    'Dog-Horse': 'Trustworthy and enthusiastic; both support each other\'s goals.',
+    'Pig-Rabbit': 'Harmonious and caring; both foster a peaceful connection.'
   };
   return compatibilities[`${animal1}-${animal2}`] || compatibilities[`${animal2}-${animal1}`] || 'Balanced dynamics with mutual respect.';
 };
@@ -318,7 +347,21 @@ const getZodiacCompatibility = (animal1, animal2) => {
 const getRelationshipAdvice = (animal1, animal2) => {
   const advice = {
     'Rat-Ox': 'open communication and shared goals',
-    'Tiger-Tiger': 'patience and compromise to balance strong personalities'
+    'Rat-Dragon': 'encourage each other\'s ambitions while maintaining balance',
+    'Rat-Monkey': 'foster trust to complement intellectual synergy',
+    'Ox-Snake': 'build trust through patience and mutual respect',
+    'Ox-Rooster': 'align on long-term goals to strengthen partnership',
+    'Tiger-Tiger': 'patience and compromise to balance strong personalities',
+    'Tiger-Horse': 'embrace shared adventures while respecting individuality',
+    'Rabbit-Goat': 'deepen emotional connection through empathy',
+    'Dragon-Monkey': 'support each other\'s creativity and strategic goals',
+    'Snake-Rooster': 'maintain clear communication to enhance precision',
+    'Horse-Dog': 'cultivate loyalty and mutual support in adventures',
+    'Goat-Pig': 'nurture harmony through kindness and understanding',
+    'Monkey-Rat': 'build trust to sustain intellectual connection',
+    'Rooster-Ox': 'focus on shared values for stability',
+    'Dog-Horse': 'promote honesty and mutual encouragement',
+    'Pig-Rabbit': 'strengthen bond through mutual care and peace'
   };
   return advice[`${animal1}-${animal2}`] || advice[`${animal2}-${animal1}`] || 'mutual understanding and clear communication';
 };
@@ -329,6 +372,8 @@ const Calculator = () => {
   const [person2, dispatchPerson2] = useReducer(personReducer, { ...initialPersonState, gender: 'male' });
   const [analysisType, setAnalysisType] = useState('single');
   const [result, setResult] = useState(null);
+  const [toast, setToast] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (personDispatch) => (field) => (e) => {
     personDispatch({ type: 'UPDATE_FIELD', field, value: e.target.value });
@@ -336,44 +381,59 @@ const Calculator = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     
     if (!person1.name || !moment(person1.birthDate, 'YYYY-MM-DD', true).isValid()) {
-      setResult({ error: 'Please provide a valid name and birth date for Person 1.' });
+      setToast({ message: 'Please provide a valid name and birth date for Person 1.', type: 'error' });
+      setIsLoading(false);
       return;
     }
     
     if (analysisType === 'compatibility' && (!person2.name || !moment(person2.birthDate, 'YYYY-MM-DD', true).isValid())) {
-      setResult({ error: 'Please provide a valid name and birth date for Person 2.' });
+      setToast({ message: 'Please provide a valid name and birth date for Person 2.', type: 'error' });
+      setIsLoading(false);
       return;
     }
     
-    const person1Data = {
-      name: person1.name,
-      zodiac: calculateChineseZodiac(person1.birthDate),
-      bazi: calculateBazi(person1.birthDate, person1.birthTime),
-      ziWei: calculateZiWeiDouShu(person1.birthDate, person1.birthTime),
-      luckPillars: calculateLuckPillars(moment(person1.birthDate).year()),
-      personality: `Based on ${person1.name}'s ${person1.gender} energy, ${person1.name} exhibits ${getPersonalityProfile(person1)}.`,
-      deepSeekAnalysis: `DeepSeek R1 Analysis: ${getDeepSeekAnalysis(calculateBazi(person1.birthDate, person1.birthTime))}`
-    };
-    
-    const resultData = { person1: person1Data };
-    
-    if (analysisType === 'compatibility') {
-      const person2Data = {
-        name: person2.name,
-        zodiac: calculateChineseZodiac(person2.birthDate),
-        bazi: calculateBazi(person2.birthDate, person2.birthTime),
-        ziWei: calculateZiWeiDouShu(person2.birthDate, person2.birthTime),
-        luckPillars: calculateLuckPillars(moment(person2.birthDate).year()),
-        personality: `Based on ${person2.name}'s ${person2.gender} energy, ${person2.name} exhibits ${getPersonalityProfile(person2)}.`,
-        deepSeekAnalysis: `DeepSeek R1 Analysis: ${getDeepSeekAnalysis(calculateBazi(person2.birthDate, person2.birthTime))}`
+    setTimeout(() => {
+      const person1Data = {
+        name: person1.name,
+        zodiac: calculateChineseZodiac(person1.birthDate),
+        bazi: calculateBazi(person1.birthDate, person1.birthTime),
+        ziWei: calculateZiWeiDouShu(person1.birthDate, person1.birthTime),
+        luckPillars: calculateLuckPillars(moment(person1.birthDate).year()),
+        personality: `Based on ${person1.name}'s ${person1.gender} energy, ${person1.name} exhibits ${getPersonalityProfile(person1)}.`,
+        deepSeekAnalysis: `DeepSeek R1 Analysis: ${getDeepSeekAnalysis(calculateBazi(person1.birthDate, person1.birthTime))}`
       };
-      resultData.person2 = person2Data;
-      resultData.compatibility = calculateCompatibility(person1, person2);
-    }
-    
-    setResult(resultData);
+      
+      const resultData = { person1: person1Data };
+      
+      if (analysisType === 'compatibility') {
+        const person2Data = {
+          name: person2.name,
+          zodiac: calculateChineseZodiac(person2.birthDate),
+          bazi: calculateBazi(person2.birthDate, person2.birthTime),
+          ziWei: calculateZiWeiDouShu(person2.birthDate, person2.birthTime),
+          luckPillars: calculateLuckPillars(moment(person2.birthDate).year()),
+          personality: `Based on ${person2.name}'s ${person2.gender} energy, ${person2.name} exhibits ${getPersonalityProfile(person2)}.`,
+          deepSeekAnalysis: `DeepSeek R1 Analysis: ${getDeepSeekAnalysis(calculateBazi(person2.birthDate, person2.birthTime))}`
+        };
+        resultData.person2 = person2Data;
+        resultData.compatibility = calculateCompatibility(person1, person2);
+      }
+      
+      setResult(resultData);
+      setToast({ message: 'Analysis generated successfully!', type: 'success' });
+      setIsLoading(false);
+    }, 1000); // Simulate processing time
+  };
+
+  const handleReset = () => {
+    dispatchPerson1({ type: 'RESET' });
+    dispatchPerson2({ type: 'RESET', value: { ...initialPersonState, gender: 'male' } });
+    setAnalysisType('single');
+    setResult(null);
+    setToast({ message: 'Form reset successfully.', type: 'success' });
   };
 
   const getPersonalityProfile = (person) => {
@@ -392,7 +452,15 @@ const Calculator = () => {
 
   return (
     <div className="container mx-auto p-4 max-w-3xl">
-      <h1 className="text-2xl font-bold mb-6">Ultra-Detailed Chinese Astrology Calculator</h1>
+      <h1 className="text-2xl font-bold mb-6">Ultra-Detaileds Astrology Calculator</h1>
+      
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
       
       <FormContainer>
         <form onSubmit={handleSubmit}>
@@ -401,7 +469,6 @@ const Calculator = () => {
             value={analysisType}
             onChange={(e) => setAnalysisType(e.target.value)}
             options={analysisTypeOptions}
-            helpText="Choose between individual or couple compatibility analysis"
           />
           
           <SectionTitle>Person 1</SectionTitle>
@@ -415,14 +482,12 @@ const Calculator = () => {
             type="date"
             value={person1.birthDate}
             onChange={handleInputChange(dispatchPerson1)('birthDate')}
-            helpText="Format: YYYY-MM-DD"
           />
           <InputField
             label="Birth Time"
             type="time"
             value={person1.birthTime}
             onChange={handleInputChange(dispatchPerson1)('birthTime')}
-            helpText="Format: HH:MM (24-hour)"
           />
           <InputField
             label="Birth Place"
@@ -458,14 +523,12 @@ const Calculator = () => {
                 type="date"
                 value={person2.birthDate}
                 onChange={handleInputChange(dispatchPerson2)('birthDate')}
-                helpText="Format: YYYY-MM-DD"
               />
               <InputField
                 label="Birth Time"
                 type="time"
                 value={person2.birthTime}
                 onChange={handleInputChange(dispatchPerson2)('birthTime')}
-                helpText="Format: HH:MM (24-hour)"
               />
               <InputField
                 label="Birth Place"
@@ -490,12 +553,32 @@ const Calculator = () => {
             </>
           )}
           
-          <button
-            type="submit"
-            className="w-full p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-          >
-            Calculate
-          </button>
+          <div className="flex space-x-4">
+            <button
+              type="submit"
+              className="flex-1 p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:bg-blue-300"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <span className="flex items-center justify-center">
+                  <svg className="animate-spin h-5 w-5 mr-2 text-white" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8h8a8 8 0 01-16 0z" />
+                  </svg>
+                  Calculating...
+                </span>
+              ) : (
+                'Calculate'
+              )}
+            </button>
+            <button
+              type="button"
+              onClick={handleReset}
+              className="flex-1 p-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
+            >
+              Reset
+            </button>
+          </div>
         </form>
       </FormContainer>
       
@@ -509,7 +592,7 @@ const Calculator = () => {
             </div>
           ) : (
             <>
-              <CollapsibleSection title={`${result.person1.name || 'Person 1'}'s Chinese Astrology`}>
+              <CollapsibleSection title={`${result.person1.name || 'Person 1'}'s Astrology`}>
                 <h3 className="font-medium">Chinese Zodiac</h3>
                 <p>{result.person1.zodiac.description}</p>
                 
@@ -542,7 +625,7 @@ const Calculator = () => {
               </CollapsibleSection>
               
               {result.person2 && (
-                <CollapsibleSection title={`${result.person2.name || 'Person 2'}'s Chinese Astrology`}>
+                <CollapsibleSection title={`${result.person2.name || 'Person 2'}'s Astrology`}>
                   <h3 className="font-medium">Chinese Zodiac</h3>
                   <p>{result.person2.zodiac.description}</p>
                   
