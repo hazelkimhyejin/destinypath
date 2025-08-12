@@ -1,0 +1,21 @@
+node_modules/
+dist/
+.env
+.log
+
+#Python
+__pycache__/
+*.py[cod]
+*.pyc
+.venv/
+env/
+
+#Epheeris files
+streamlit/ephe
+
+#VS Code
+.vscode/
+*.code-workspace
+
+#Misc
+*.DS_Store
