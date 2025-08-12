@@ -1,0 +1,86 @@
+{
+       "app": {
+         "title": "DestinyPath Insights",
+         "description": "Get personalized Saju, BaZi, and Numerology insights in your language, instantly and affordably."
+       },
+       "nav": {
+         "welcome": "Welcome",
+         "single": "Single Calculator",
+         "couple": "Couple Compatibility",
+         "feedback": "Feedback"
+       },
+       "sidebar": {
+         "title": "Navigation",
+         "nav": "Select Page",
+         "language": "Language"
+       },
+       "welcome": {
+         "title": "Unlock Your Destiny",
+         "description": "Get personalized Saju, BaZi, and Numerology insights in your language, instantly and affordably.",
+         "single_button": "Single Analysis",
+         "couple_button": "Couple Compatibility"
+       },
+       "single": {
+         "title": "Single Calculator",
+         "name": "Full Name",
+         "name_help": "Enter your full name for personalized results.",
+         "dob": "Date of Birth",
+         "dob_help": "Select your birth date for accurate calculations.",
+         "time": "Time of Birth",
+         "time_help": "Enter your birth time for precise astrological insights.",
+         "gender": "Gender",
+         "male": "Male",
+         "female": "Female",
+         "country": "Country/Time Zone",
+         "submit": "Calculate",
+         "saju_result": "Saju Result",
+         "numerology_result": "Life Path Number",
+         "premium": "Unlock Detailed Report",
+         "premium_prompt": "Get a comprehensive analysis for $4.99! Includes detailed BaZi and career insights.",
+         "calculating": "Calculating your cosmic insights...",
+         "result_placeholder": "Your results will appear here."
+       },
+       "couple": {
+         "title": "Couple Compatibility",
+         "person1": "Person 1",
+         "name1": "Full Name (Person 1)",
+         "name_help": "Enter full name for personalized compatibility.",
+         "dob1": "Date of Birth (Person 1)",
+         "dob_help": "Select birth date for accurate compatibility.",
+         "time1": "Time of Birth (Person 1)",
+         "time_help": "Enter birth time for precise compatibility.",
+         "gender1": "Gender (Person 1)",
+         "country1": "Country/Time Zone (Person 1)",
+         "person2": "Person 2",
+         "name2": "Full Name (Person 2)",
+         "dob2": "Date of Birth (Person 2)",
+         "time2": "Time of Birth (Person 2)",
+         "gender2": "Gender (Person 2)",
+         "country2": "Country/Time Zone (Person 2)",
+         "submit": "Calculate Compatibility",
+         "compatibility": "Compatibility Score",
+         "premium": "Unlock Full Report",
+         "premium_prompt": "Get a detailed compatibility report for $7.99! Includes elemental harmony analysis.",
+         "calculating": "Calculating your compatibility...",
+         "result_placeholder": "Your compatibility results will appear here."
+       },
+       "chatbot": {
+         "title": "Ask Our Cosmic Guide",
+         "prompt": "Ask a question about your chart...",
+         "response": "Answer"
+       },
+       "feedback": {
+         "title": "Share Your Feedback",
+         "prompt": "Tell us how we can improve!",
+         "submit": "Submit Feedback",
+         "success": "Feedback submitted successfully!",
+         "error": "Failed to submit feedback."
+       },
+       "premium": {
+         "single": "Unlock Single Report",
+         "couple": "Unlock Couple Report",
+         "subscription": "Get Unlimited Access ($9.99/month)"
+       },
+       "data_saved": "Data saved successfully!",
+       "data_save_error": "Failed to save data."
+     }

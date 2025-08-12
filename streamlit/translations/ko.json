@@ -1,0 +1,86 @@
+{
+       "app": {
+         "title": "DestinyPath 인사이트",
+         "description": "영어, 중국어, 한국어 또는 일본어로 개인화된 사주, 팔자, 수비학 통찰을 즉시 저렴하게 얻으세요."
+       },
+       "nav": {
+         "welcome": "환영",
+         "single": "개인 계산기",
+         "couple": "커플 호환성",
+         "feedback": "피드백"
+       },
+       "sidebar": {
+         "title": "내비게이션",
+         "nav": "페이지 선택",
+         "language": "언어"
+       },
+       "welcome": {
+         "title": "당신의 운명을 열어보세요",
+         "description": "영어, 중국어, 한국어 또는 일본어로 개인화된 사주, 팔자, 수비학 통찰을 즉시 저렴하게 얻으세요.",
+         "single_button": "개인 분석",
+         "couple_button": "커플 호환성"
+       },
+       "single": {
+         "title": "개인 계산기",
+         "name": "전체 이름",
+         "name_help": "개인화된 결과를 위해 전체 이름을 입력하세요.",
+         "dob": "생년월일",
+         "dob_help": "정확한 계산을 위해 생년월일을 선택하세요.",
+         "time": "출생 시간",
+         "time_help": "정확한 점성술 통찰을 위해 출생 시간을 입력하세요.",
+         "gender": "성별",
+         "male": "남성",
+         "female": "여성",
+         "country": "국가/시간대",
+         "submit": "계산",
+         "saju_result": "사주 결과",
+         "numerology_result": "인생 경로 번호",
+         "premium": "상세 보고서 잠금 해제",
+         "premium_prompt": "$4.99로 종합 분석을 받으세요! 자세한 팔자 및 경력 통찰 포함.",
+         "calculating": "당신의 우주적 통찰을 계산 중...",
+         "result_placeholder": "결과가 여기에 표시됩니다."
+       },
+       "couple": {
+         "title": "커플 호환성",
+         "person1": "1번 사람",
+         "name1": "전체 이름 (1번 사람)",
+         "name_help": "개인화된 호환성을 위해 전체 이름을 입력하세요.",
+         "dob1": "생년월일 (1번 사람)",
+         "dob_help": "정확한 호환성을 위해 생년월일을 선택하세요.",
+         "time1": "출생 시간 (1번 사람)",
+         "time_help": "정확한 호환성을 위해 출생 시간을 입력하세요.",
+         "gender1": "성별 (1번 사람)",
+         "country1": "국가/시간대 (1번 사람)",
+         "person2": "2번 사람",
+         "name2": "전체 이름 (2번 사람)",
+         "dob2": "생년월일 (2번 사람)",
+         "time2": "출생 시간 (2번 사람)",
+         "gender2": "성별 (2번 사람)",
+         "country2": "국가/시간대 (2번 사람)",
+         "submit": "호환성 계산",
+         "compatibility": "호환성 점수",
+         "premium": "전체 보고서 잠금 해제",
+         "premium_prompt": "$7.99로 상세 호환성 보고서를 받으세요! 요소 조화 분석 포함.",
+         "calculating": "호환성을 계산 중...",
+         "result_placeholder": "호환성 결과가 여기에 표시됩니다."
+       },
+       "chatbot": {
+         "title": "우주 가이드에게 질문하기",
+         "prompt": "당신의 차트에 대해 질문하세요...",
+         "response": "답변"
+       },
+       "feedback": {
+         "title": "피드백 공유",
+         "prompt": "어떻게 개선할 수 있는지 알려주세요!",
+         "submit": "피드백 제출",
+         "success": "피드백이 성공적으로 제출되었습니다!",
+         "error": "피드백 제출에 실패했습니다."
+       },
+       "premium": {
+         "single": "개인 보고서 잠금 해제",
+         "couple": "커플 보고서 잠금 해제",
+         "subscription": "무제한 액세스 ($9.99/월)"
+       },
+       "data_saved": "데이터가 성공적으로 저장되었습니다!",
+       "data_save_error": "데이터 저장에 실패했습니다。"
+     }
