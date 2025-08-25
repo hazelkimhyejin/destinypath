@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel&family=Open+Sans&display=swap');
+     .starry-bg {
+       background: linear-gradient(to bottom right, #2D1B4E, #1E3A8A);
+       position: relative;
+       overflow: hidden;
+     }
+     .starry-bg.japan-bg::before {
+       content: '';
+       position: absolute;
+       top: 0;
+       left: 0;
+       right: 0;
+       bottom: 0;
+       background: url('/cherry-blossom.png') repeat;
+       animation: twinkle 10s infinite;
+       opacity: 0.3;
+     }
+     .starry-bg::before {
+       content: '';
+       position: absolute;
+       top: 0;
+       left: 0;
+       right: 0;
+       bottom: 0;
+       background: url('/stars.png') repeat;
+       animation: twinkle 10s infinite;
+       opacity: 0.5;
+     }
+     @keyframes twinkle {
+       0%, 100% { opacity: 0.5; }
+       50% { opacity: 0.8; }
+     }
+     input, select {
+       transition: box-shadow 0.3s;
+     }
+     input:hover, select:hover {
+       box-shadow: 0 0 8px rgba(107, 78, 170, 0.5);
+     }
